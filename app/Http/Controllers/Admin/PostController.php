@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class PostController extends Controller
 {
@@ -50,7 +51,20 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('admin.posts.show', compact('post'));
+        $categories = Category::all();
+        $checkCategory = false;
+        $i = 0;
+        do {
+            if ($post->category_id === $categories[$i]->id) {
+                $category = $categories[$i]->name;
+                $checkCategory = true;
+            }
+            $i++;
+        } while (!$checkCategory);
+        return view('admin.posts.show', [
+            'post' => $post,
+            'category' => $category
+        ]);
     }
 
     /**

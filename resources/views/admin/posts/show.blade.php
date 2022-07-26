@@ -16,10 +16,11 @@
 
                     @include('admin.includes.side-bar')
                     
-                    <h1>{{$post->title}}</h1>
+                    <h1>Title: {{$post->title}}</h1>
+                    <h5>Category: {{$category}}</h5>
                     <img src="{{$post->image}}" alt="{{$post->title}}">
                     <figcaption>
-                        <p>{{$post->content}}</p>
+                        <p>Content: {{$post->content}}</p>
                    </figcaption>
                 </div>
             </div>
