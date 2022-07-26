@@ -16,18 +16,7 @@
 
                     @include('admin.includes.side-bar')
                     
-                    <h1>Title: {{$post->title}}</h1>
-                    <h5>Category: {{$category}}</h5>
-                    <p>
-                        Tags: 
-                        @foreach ($post->tags as $tag)
-                        {{$tag->name}}
-                        @endforeach
-                    </p>
-                    <img src="{{$post->image}}" alt="{{$post->title}}">
-                    <figcaption>
-                        <p>Content: {{$post->content}}</p>
-                   </figcaption>
+                    sono l'edit
                 </div>
             </div>
         </div>
