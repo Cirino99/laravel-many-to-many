@@ -99,7 +99,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.edit', [
+            'post' => $post,
+            'categories' => $categories,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -111,7 +117,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $formData = $request->all();
+        // update dei dati solo se dichiarato il fillable
+        $post->update($formData);
+        // serve per aggiornare i tags del post in quanto update da solo non basta in quanto è una relazione many to many
+        $post->tags()->sync($formData['tags']);
+
+        return redirect()->route('admin.posts.show', ['post' => $post]);
     }
 
     /**
