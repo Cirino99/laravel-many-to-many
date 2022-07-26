@@ -30,7 +30,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.posts.create', [
+            'categories' => $categories,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -41,7 +46,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title'     => 'required|string|max:100',
+            'slug'      => 'required|string|max:100|unique:posts',
+            'category_id'  => 'required|integer|exists:categories,id',
+            'tags'      => 'nullable|array',
+            'tags.*'    => 'integer|exists:tags,id',
+            'image'     => 'required_without:content|nullable|url',
+            'content'   => 'required_without:image|nullable|string|max:5000',
+        ]);
+
+        $data = $request->all();
+        dump($data);
+
+        // salvataggio
+        $post = Post::create($data);
+        $post->tags()->sync($data['tags']);
+
+        // redirect
+        return redirect()->route('admin.posts.show', ['post' => $post]);
     }
 
     /**

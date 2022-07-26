@@ -12634,3 +12634,8 @@ fieldset:disabled .btn {
   }
 }
 
+.my-fieldset {
+  height: 150px;
+  overflow: auto;
+}
+
