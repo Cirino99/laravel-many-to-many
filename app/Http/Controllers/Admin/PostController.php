@@ -57,7 +57,6 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-        dump($data);
 
         // salvataggio
         $post = Post::create($data);
@@ -117,6 +116,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate([
+            'title'     => 'required|string|max:100',
+            'slug'      => 'required|string|max:100|unique:posts',
+            'category_id'  => 'required|integer|exists:categories,id',
+            'tags'      => 'nullable|array',
+            'tags.*'    => 'integer|exists:tags,id',
+            'image'     => 'required_without:content|nullable|url',
+            'content'   => 'required_without:image|nullable|string|max:5000',
+        ]);
+
         $formData = $request->all();
         // update dei dati solo se dichiarato il fillable
         $post->update($formData);
