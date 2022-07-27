@@ -21,6 +21,7 @@
                         <thead>
                             <tr>
                                 <th>Id</th>
+                                <th>Author</th>
                                 <th>Slug</th>
                                 <th>Title</th>
                                 <th colspan="3">Actions</th>
@@ -30,16 +31,21 @@
                             @foreach ($posts as $post)
                                 <tr data-id="{{ $post->id }}">
                                     <td>{{ $post->id }}</td>
+                                    <td>{{ $post->user->name }}</td>
                                     <td>{{ $post->slug }}</td>
                                     <td>{{ $post->title }}</td>
                                     <td>
                                         <a href="{{ route('admin.posts.show', ['post' => $post]) }}" class="btn btn-primary">View</a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-warning">Edit</a>
+                                        @if(Auth::id() == $post->user_id)
+                                            <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-warning">Edit</a>
+                                        @endif
                                     </td>
                                     <td>
-                                        <button class="btn btn-danger js-delete">Delete</button>
+                                        @if(Auth::id() == $post->user_id)
+                                            <button class="btn btn-danger js-delete">Delete</button>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

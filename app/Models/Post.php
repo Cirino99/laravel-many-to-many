@@ -12,12 +12,17 @@ class Post extends Model
     protected $fillable = ['title', 'content', 'excerpt', 'category_id', 'image', 'slug'];
 
     public function category()
-    {
+    { // il belongs to sta dalla parte dell'1 della relazione e il nome deve essere singolare
         return $this->belongsTo('App\Models\Category');
     }
 
     public function tags()
     {
         return $this->belongsToMany('App\Models\Tag');
+    }
+
+    public function user()
+    { // il belongs to sta dalla parte dell'1 della relazione e il nome deve essere singolare
+        return $this->belongsTo('App\Models\User');
     }
 }
