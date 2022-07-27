@@ -9,7 +9,7 @@ class Post extends Model
 {
     use Slugger;
 
-    protected $fillable = ['title', 'content', 'excerpt', 'category_id', 'image', 'slug'];
+    protected $fillable = ['title', 'content', 'excerpt', 'category_id', 'image', 'slug', 'user_id'];
 
     public function category()
     { // il belongs to sta dalla parte dell'1 della relazione e il nome deve essere singolare

@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -57,7 +58,8 @@ class PostController extends Controller
             'content'   => 'required_without:image|nullable|string|max:5000',
         ]);
 
-        $data = $request->all();
+        $data = $request->all() + ['user_id' => Auth::id()];
+        $data['slug'] = Post::getSlug($data['slug']);
 
         // salvataggio
         $post = Post::create($data);
@@ -116,11 +118,12 @@ class PostController extends Controller
             'content'   => 'required_without:image|nullable|string|max:5000',
         ]);
 
-        $formData = $request->all();
+        $data = $request->all();
+        $data['slug'] = Post::getSlug($data['slug']);
         // update dei dati solo se dichiarato il fillable
-        $post->update($formData);
+        $post->update($data);
         // serve per aggiornare i tags del post in quanto update da solo non basta in quanto è una relazione many to many
-        $post->tags()->sync($formData['tags']);
+        $post->tags()->sync($data['tags']);
 
         return redirect()->route('admin.posts.show', ['post' => $post]);
     }
