@@ -6,6 +6,7 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
@@ -107,7 +108,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title'     => 'required|string|max:100',
-            'slug'      => 'required|string|max:100|unique:posts',
+            'slug'      => ['required', 'string', 'max:100', Rule::unique('posts')->ignore($post->id)], //unique tranne che per se stesso, permete modifiche
             'category_id'  => 'required|integer|exists:categories,id',
             'tags'      => 'nullable|array',
             'tags.*'    => 'integer|exists:tags,id',
