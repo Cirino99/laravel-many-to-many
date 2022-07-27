@@ -34,13 +34,9 @@
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-
-                                    @php
-                                        $details = $user->userDetails()->first()
-                                    @endphp
-                                    <td>{{ $details ? ($details->address ?: '-') : '-' }}</td>
-                                    <td>{{ $details ? ($details->phone ?: '-') : '-' }}</td>
-                                    <td>{{ $details ? ($details->birth ?: '-') : '-' }}</td>
+                                    <td>{{ $user->userDetails->address ?: '-' }}</td>
+                                    <td>{{ $user->userDetails->phone ?: '-' }}</td>
+                                    <td>{{ $user->userDetails->birth ?: '-' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
