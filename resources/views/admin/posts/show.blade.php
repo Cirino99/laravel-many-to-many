@@ -17,7 +17,7 @@
                     @include('admin.includes.side-bar')
                     
                     <h1>Title: {{$post->title}}</h1>
-                    <h5>Category: {{$category}}</h5>
+                    <h5>Category: {{$post->category->name}}</h5>
                     <p>
                         Tags: 
                         @foreach ($post->tags as $tag)

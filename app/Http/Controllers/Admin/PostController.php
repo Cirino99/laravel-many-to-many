@@ -74,19 +74,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $categories = Category::all();
-        $checkCategory = false;
-        $i = 0;
-        do {
-            if ($post->category_id === $categories[$i]->id) {
-                $category = $categories[$i]->name;
-                $checkCategory = true;
-            }
-            $i++;
-        } while (!$checkCategory);
         return view('admin.posts.show', [
             'post' => $post,
-            'category' => $category
         ]);
     }
 
